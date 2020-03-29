@@ -1,15 +1,10 @@
 # inventory file for razpi hadoop cluster nodes
 
 [raspiHadoopCluster]
-razpinode1.local
-razpinode2.local
-razpinode3.local
-razpinode4.local
+razpinode[1:4].local
 
 [raspiHadoopNameNode]
 razpinode1.local
 
 [raspiHadoopDataNode]
-razpinode2.local
-razpinode3.local
-razpinode4.local
+razpinode[2:4].local

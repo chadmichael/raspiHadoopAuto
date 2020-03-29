@@ -1,0 +1,40 @@
+---
+- hosts: raspiHadoopCluster
+  remote_user: pi
+  become: yes
+  tasks:
+  - name: create users  
+    user: 
+      name: hadoop 
+      comment: hadoop service account
+  - name: verify headless openJDK 8 jre
+    apt: 
+      name: openjdk-8-jre-headless  
+      state: present
+      
+  # We have to remove all the OpenJDK 11 stuff found on the Raspbian base OS    
+  - name: verify absense JRE 11
+    apt: 
+      name: openjdk-11-jre 
+      state: absent
+  - name: verify absense jre 11 headless
+    apt: 
+      name: openjdk-11-jre-headless 
+      state: absent  
+  - name: verify absense jdk 11                  
+    apt: 
+      name: openjdk-11-jdk 
+      state: absent
+  - name: verify absense jdk 11 headless
+    apt: 
+      name: openjdk-11-jdk-headless 
+      state: absent                  
+
+  - name: remove useless packages from the cache
+    apt:
+      autoclean: yes
+  - name: remove dependencies that are no longer required
+    apt:
+      autoremove: yes
+
+
