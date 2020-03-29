@@ -47,7 +47,7 @@ While you can run ansible from the command line, issue ad hoc commands to be exe
 
 Here's how to run the base node stuff.
 
-'ansible-playbook -i hosts baseHadoopNodePlaybook.yaml'
+`ansible-playbook -i hosts baseHadoopNodePlaybook.yaml`
 
 Parameters include pointer to host file where inventory groups are definted, as well as the playbook for a basenode; base node stuff is configuration and installation common to all nodes in cluster.
 
