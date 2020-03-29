@@ -15,12 +15,14 @@ is pluggable.  Older big data applications used Apache MapReduce for this layer
 Systems
 -------
 
-Raspberry Pi 4B with 4GB and ample SD cards ( the SD cards are the storage, so for real big data this just won't work, 
-but it's good enough for dev purposes ) Raspbian OS ( raspberry pi specific flavor of Debian )  I tried to use Ubuntu, but
-Ubuntu's server or core distributions ( stripped down for production work, i.e. no desktop but also no easy wifi ... ) but
-found that I benefit by the ease of wifi and other home lab niceties not found in these lean production tuned base OS 
-flavors. One hassle though ... I had to remove Java 11, which simply wouldn't be there on the Ubuntu Server or Ubuntu Core
-because Java 11 is not supported across the jave ecosystem yet, and is therefore not a player in production systems yet.
+**Raspberry Pi 4B** with 4GB and ample SD cards ( the SD cards are the storage, so for real big data this just won't work, 
+but it's good enough for dev purposes )  
+
+**Raspbian OS** ( raspberry pi specific flavor of Debian )  
+
+I tried to use Ubuntu, but Ubuntu's server or core distributions ( stripped down for production work, i.e. no desktop but also no easy wifi ... ) but found that I benefit by the ease of wifi and other home lab niceties not found in these lean production tuned base OS flavors. 
+
+One hassle though ... I had to remove Java 11, which simply wouldn't be there on the Ubuntu Server or Ubuntu Core because Java 11 is not supported across the jave ecosystem yet, and is therefore not a player in production systems yet.
 Open JDK 8 ( from Raspbian's APT repos )
 
 Automation
