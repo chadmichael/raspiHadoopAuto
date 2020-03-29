@@ -4,7 +4,7 @@ Ansible automation for the hadoop / spark pi cluster
 Purpose
 -------
 
-Create Apache Hadoop cluster out of four raspi's.
+Create Apache Hadoop cluster out of four raspi's.  This repo contains Ansible automation to bring bare systems up to participating nodes in a cluster.
 
 Hadoop is open source cluster computing software.  Includes a distributed file system (HDFS) to store data across cluster,
 as well as a distributed resource manager (YARN) for giving resources for execution of parallel jobs across worker nodes.
@@ -19,6 +19,13 @@ Systems
 but it's good enough for dev purposes )  
 
 **Raspbian OS** ( raspberry pi specific flavor of Debian )  
+
+**Presumed Users**  
+
+You just need a user via whom you can connect over SSH from ansible scripts.  I'm using the raspberry pi default user 'pi', but I've turned off password authentication and am using key authetnicated SSH access.  So, I've done a couple of things to the target systems prior to running ansible automation; ie set up keys and ssh, not to mention setting up wifi.
+
+Notes on Systems
+----------------
 
 I tried to use Ubuntu, but Ubuntu's server or core distributions ( stripped down for production work, i.e. no desktop but also no easy wifi ... ) but found that I benefit by the ease of wifi and other home lab niceties not found in these lean production tuned base OS flavors. 
 
