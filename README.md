@@ -36,5 +36,19 @@ Automation
 ----------
 
 Ansible Playbooks -- simple tool for automating system configuration and application deployment.  Agentless.
-Only need python installed on the system from which you orchestrate, my laptop generally in my home environment.     
+Only need python installed on the system from which you orchestrate, my laptop generally in my home environment.  
+
+Execution Ansible
+-----------------
+
+If you have systems, and a user who can access them over SSH, you can run the Ansible automation.  Note, this automation presumes the Raspbian OS.  Presumably, the same packages exist in all relative newish version of Debian based OS's; however, if you don't know Java in these ecosystems, you might struggle to get the right packages.  
+
+While you can run ansible from the command line, issue ad hoc commands to be executed on remote hosts, this automation codebase uses Ansible Playbooks with Inventory Groups.  The playbooks define the system configurations and application deployments while the inventory defines role specific groupings of target systems, such as "name nodes", "base node", "data node" ... 
+
+Here's how to run the base node stuff.
+
+'ansible-playbook -i hosts baseHadoopNodePlaybook.yaml'
+
+Parameters include pointer to host file where inventory groups are definted, as well as the playbook for a basenode; base node stuff is configuration and installation common to all nodes in cluster.
+
 
