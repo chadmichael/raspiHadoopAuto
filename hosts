@@ -1,4 +1,10 @@
 # inventory file for razpi hadoop cluster nodes
+# Hostnames include a number, and these groups use regex ranges to build out all node names
+# Actual Hostnames:  
+#   razpinode1
+#   razpinode2
+#   razpinode3
+#   razpinode4
 
 [raspiHadoopCluster]
 razpinode[1:4].local
