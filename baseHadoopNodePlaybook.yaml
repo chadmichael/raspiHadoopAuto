@@ -30,11 +30,16 @@
       name: openjdk-11-jdk-headless 
       state: absent                  
 
+ # Hadoop Dependencies
+  - name: Verify Rsync
+    apt:
+      name: rsync
+      state: present
+
+  # Apt Cleanup
   - name: remove useless packages from the cache
     apt:
       autoclean: yes
   - name: remove dependencies that are no longer required
     apt:
       autoremove: yes
-
-
