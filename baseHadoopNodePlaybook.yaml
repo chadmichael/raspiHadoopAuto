@@ -49,30 +49,50 @@
 
 - hosts: raspiHadoopNameNode
   remote_user: pi
+  become: yes
   tasks:
-  - name: Create keys for pi user on master node
+  - name: Verify user local ssh folder
+    file:
+      path: /home/hadoop/.ssh
+      state: directory
+      mode: '0755'
+      owner: hadoop
+      group: hadoop
+  - name: Create keys for hadoop user on master node
     openssh_keypair:
-      path: ~/.ssh/id_rsa
+      path: /home/hadoop/.ssh/id_rsa
+      owner: hadoop
+      group: hadoop
     notify: 
         - Save Master Keys
+#  - name: Add data node host keys to known hosts
+    
   handlers:
     - name: Save Master Keys
       fetch:
-        src: /home/pi/.ssh/id_rsa.pub
-        dest: keys/nameNode/id_rsa_nameNode.pub
+        src: /home/hadoop/.ssh/id_rsa.pub
+        dest: keys/nameNode/id_rsa_nameNode_hadoopUser.pub
         flat: yes
-      notify: 
-        - Generate Data Node Authorized Keys
       
 # Data Nodes
 
 - hosts: raspiHadoopDataNode
   remote_user: pi
-  tasks:   
-  - name: Insert/Update configuration using a local file and validate it
+  become: yes
+  tasks:
+  - name: Save Data Node Host Keys
+    fetch: 
+      src: /etc/ssh/ssh_host_rsa_key.pub
+      dest: keys/dataNode/host_key_{{ansible_hostname}}.pub
+      flat: yes
+  - name: Add hadooop@masternode key to hadoop@dataNodeX authorized keys
     blockinfile:
-      block: "{{ lookup('file', 'keys/nameNode/id_rsa_nameNode.pub') }}"
-      dest: /home/pi/.ssh/authorized_keys
+      block: "{{ lookup('file', 'keys/nameNode/id_rsa_nameNode_hadoopUser.pub') }}"
+      dest: /home/hadoop/.ssh/authorized_keys
       insertafter: EOF
       create: yes
+      owner: hadoop
+      group: hadoop
+      
+      
         
