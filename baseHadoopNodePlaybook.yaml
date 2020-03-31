@@ -43,3 +43,28 @@
   - name: remove dependencies that are no longer required
     apt:
       autoremove: yes
+    
+    
+# MASTER 
+
+- hosts: raspiHadoopNameNode
+  remote_user: pi
+  tasks:
+  - name: Create keys for pi user on master node
+    openssh_keypair:
+      path: ~/.ssh/id_rsa
+    notify: 
+        - Save Master Keys
+  handlers:
+    - name: Save Master Keys
+      fetch:
+        src: /home/pi/.ssh/id_rsa.pub
+        dest: keys/nameNode/id_rsa_nameNode.pub
+        flat: yes
+        
+        
+#- hosts: raspiHadoopDataNode
+ #remote_user: pi
+ #handlers:
+ #- name: distribute master key
+    
