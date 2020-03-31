@@ -61,10 +61,18 @@
         src: /home/pi/.ssh/id_rsa.pub
         dest: keys/nameNode/id_rsa_nameNode.pub
         flat: yes
+      notify: 
+        - Generate Data Node Authorized Keys
+      
+# Data Nodes
+
+- hosts: raspiHadoopDataNode
+  remote_user: pi
+  tasks:   
+  - name: Insert/Update configuration using a local file and validate it
+    blockinfile:
+      block: "{{ lookup('file', 'keys/nameNode/id_rsa_nameNode.pub') }}"
+      dest: /home/pi/.ssh/authorized_keys
+      insertafter: EOF
+      create: yes
         
-        
-#- hosts: raspiHadoopDataNode
- #remote_user: pi
- #handlers:
- #- name: distribute master key
-    
