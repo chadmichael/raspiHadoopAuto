@@ -65,11 +65,15 @@
       group: hadoop
     notify: 
         - Save Master Keys
-    - name: Add data node host keys to master node known hosts
-      blockinfile:
-        block: "{{ lookup('file', 'keys/dataNode/host_key_{{ansible_hostname}}.pub') }}"
-        dest: /home/
-        
+  #- name: Add data node host keys to master node known hosts
+    #blockinfile:
+      #block: "{{ lookup('file', 'keys/dataNode/host_key_{{item}}.pub') }}"
+      #dest: /home/hadoop/host_key
+      #create: true
+      #owner: hadoop
+      #group: hadoop  
+    #loop: "{{ groups['raspiHadoopDataNode']}}"
+    
   handlers:
     - name: Save Master Keys
       fetch:
@@ -86,7 +90,7 @@
   - name: Save Data Node Host Keys
     fetch: 
       src: /etc/ssh/ssh_host_rsa_key.pub
-      dest: keys/dataNode/host_key_{{ansible_hostname}}.pub
+      dest: keys/dataNode/host_key_{{inventory_hostname}}.pub
       flat: yes
   - name: Add hadooop@masternode key to hadoop@dataNodeX authorized keys
     blockinfile:
