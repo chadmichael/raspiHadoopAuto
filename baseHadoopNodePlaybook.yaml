@@ -65,8 +65,11 @@
       group: hadoop
     notify: 
         - Save Master Keys
-#  - name: Add data node host keys to known hosts
-    
+    - name: Add data node host keys to master node known hosts
+      blockinfile:
+        block: "{{ lookup('file', 'keys/dataNode/host_key_{{ansible_hostname}}.pub') }}"
+        dest: /home/
+        
   handlers:
     - name: Save Master Keys
       fetch:
@@ -93,6 +96,4 @@
       create: yes
       owner: hadoop
       group: hadoop
-      
-      
-        
+...
