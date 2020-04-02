@@ -65,14 +65,26 @@
       group: hadoop
     notify: 
         - Save Master Keys
+        
+  # BUG BUG BUG: on a clean run this will fail because it depends on the keys being saved locally from the data node play below ...
   #- name: Add data node host keys to master node known hosts
+  
+    ## APPEND TO FILE >>>   
+    ## WRITE TO CORRECT LOCATION /etc/ssh/known_hosts
     #blockinfile:
       #block: "{{ lookup('file', 'keys/dataNode/host_key_{{item}}.pub') }}"
-      #dest: /home/hadoop/host_key
+      #dest: /home/hadoop/.ssh/known_hosts
+      #insertafter: EOF
       #create: true
+      #marker_begin: "{{item}}"
+      #marker_end: "{{item}}"
       #owner: hadoop
       #group: hadoop  
-    #loop: "{{ groups['raspiHadoopDataNode']}}"
+    #loop: "{{groups['raspiHadoopDataNode']}}"
+    
+  - name: Add data node host keys to master node known_hosts via keyscan
+    shell: ssh-keyscan -H {{item}} >> /home/hadoop/.ssh/known_hosts
+    loop: "{{groups['raspiHadoopDataNode']}}"
     
   handlers:
     - name: Save Master Keys
@@ -89,7 +101,7 @@
   tasks:
   - name: Save Data Node Host Keys
     fetch: 
-      src: /etc/ssh/ssh_host_rsa_key.pub
+      src: /etc/ssh/ssh_host_ecdsa_key.pub
       dest: keys/dataNode/host_key_{{inventory_hostname}}.pub
       flat: yes
   - name: Add hadooop@masternode key to hadoop@dataNodeX authorized keys
