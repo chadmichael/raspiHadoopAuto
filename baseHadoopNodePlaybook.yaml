@@ -43,7 +43,17 @@
   - name: remove dependencies that are no longer required
     apt:
       autoremove: yes
-    
+      
+  # Hadoop Install    
+  - name: Deploy hadoop binary artifact to nodes 
+    unarchive:
+      src: /home/chadmichael/Documents/techReference/hadoop/hadoop-2.10.0.tar.gz
+      dest: /home/hadoop/hadoop
+      creates: yes
+      owner: hadoop
+      group: hadoop
+      mode: u=rw,g=r,o=r
+      keep_newer: yes
     
 # MASTER 
 
@@ -82,6 +92,7 @@
       #group: hadoop  
     #loop: "{{groups['raspiHadoopDataNode']}}"
     
+  # NOT IDEMPOTENT ... the known_hosts file keeps growing everytime we run the automation...  
   - name: Add data node host keys to master node known_hosts via keyscan
     shell: ssh-keyscan -H {{item}} >> /home/hadoop/.ssh/known_hosts
     loop: "{{groups['raspiHadoopDataNode']}}"
